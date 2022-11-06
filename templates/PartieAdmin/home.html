@@ -1,9 +1,11 @@
-<html>
-<head>
-<title>Home</title>
-</head>
-<body>
-<h1>Home</h1>
-</body>
+{% extends 'PartieAdmin/base.html' %}
 
-</html>
+{% block sidebar %}
+ {% include 'PartieAdmin/sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1>this is a test for the templates</h1>
+{% endblock %}
+
+
