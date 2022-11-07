@@ -22,7 +22,7 @@ class Module(models.Model):
 
 class Element(models.Model):
     nom = models.CharField(max_length=100)
-    module = models.ForeignKey(Module, on_delete=models.CASCADE)
+    module = models.ForeignKey(Module, on_delete=models.CASCADE ,related_name='elements')
     def __str__(self):
         return self.nom
 
@@ -31,7 +31,7 @@ class Enseignant(models.Model):
     prenom = models.CharField(max_length=100)
 
     departement = models.ForeignKey(Departement, on_delete=models.CASCADE)
-    chefdepartement = models.ForeignKey(Departement, on_delete=models.CASCADE, related_name='chefdepartement',blank=True, null=True,unique=True)
+    chefdepartement = models.OneToOneField(Departement, on_delete=models.CASCADE, related_name='chefdepartement', null=True, blank=True)
 
     def __str__(self):
         return self.nom + " " + self.prenom
