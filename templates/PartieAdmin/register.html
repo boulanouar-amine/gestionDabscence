@@ -5,14 +5,14 @@ register page
 {% endblock %}
 
 {% block content %}
-<div>
-    <h1>
-        Register
-    </h1>
+<div class="container py-5 w-25">
+<div class="text-center"> <h1>Register</h1></div>
     <form method="POST">
         {% csrf_token %}
         {{ register_form|crispy }}
+         <div class="mb-4  text-center">
         <button class="btn btn-primary" type="submit">Register</button>
+         </div>
     </form>
 <p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
 </div>

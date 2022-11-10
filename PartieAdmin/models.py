@@ -1,4 +1,8 @@
+import csv
+
 from django.db import models
+from django.http import HttpResponse
+
 
 # Create your models here.
 
@@ -10,13 +14,13 @@ class Departement(models.Model):
 
 class Filiere(models.Model):
     nom = models.CharField(max_length=100)
-    departement = models.ForeignKey(Departement, on_delete=models.CASCADE)
+    departement = models.ForeignKey(Departement, on_delete=models.CASCADE ,related_name='filiers')
     def __str__(self):
         return self.nom
 
 class Module(models.Model):
     nom = models.CharField(max_length=100)
-    filiere = models.ForeignKey(Filiere, on_delete=models.CASCADE)
+    filiere = models.ForeignKey(Filiere, on_delete=models.CASCADE ,related_name='modules')
     def __str__(self):
         return self.nom
 
@@ -49,5 +53,7 @@ class Absence(models.Model):
     element = models.ForeignKey(Element, on_delete=models.CASCADE)
     date = models.DateField()
     heure = models.TimeField(default='00:00:00')
+
+
     def __str__(self):
         return self.etudiant.nom + " " + self.etudiant.prenom + " " + self.element.nom + " " + str(self.date)

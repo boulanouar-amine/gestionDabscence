@@ -1,27 +1,43 @@
 {% extends 'PartieAdmin/base.html' %}
 
 {% block sidebar %}
- {% include 'PartieAdmin/sidebar.html' %}
+        {% include 'PartieAdmin/navbar.html' %}
+
 {% endblock %}
 
 {% block content %}
-    <h1>this is a test for the templates</h1>
 
-    <h2>Filières</h2>
-    {% for filiere in filieres %}
-    <p>Filiere: {{ filiere }}</p>
-    {% endfor %}
+ <h2>Departement</h2>
 
-    <h2>Modules</h2>
-     {% for module in modules %}
-    <p>Module: {{ module }}</p>
-        {% for element in module.elements.all %}
-            <p>Element: {{ element }}</p>
+    {% for departement in departements %}
+    <p>Departement: {{ departement }}</p>
+
+        {% for filier in departement.filiers.all %}
+            <pre>     Filières: {{ filier }}</pre>
+
+                {% for module in filier.modules.all %}
+                <pre>         Module: {{ module }}</pre>
+
+                    {% for element in module.elements.all %}
+                        <pre>               Element: {{ element }}</pre>
+                    {% endfor %}
+
+
+                {% endfor %}
+
+
         {% endfor %}
 
 
+
+
+
+    </ul>
     {% endfor %}
 
+
+
 {% endblock %}
+
 
 

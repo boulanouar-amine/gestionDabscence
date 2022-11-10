@@ -6,19 +6,20 @@ from django.shortcuts import render, redirect
 
 from .models import *
 
-from PartieAdmin.forms import NewUserForm
+from PartieAdmin.forms import NewUserForm, CustomLoginForm
 
 
 # Create your views here.
 
 @login_required(login_url='PartieAdmin:login')
 def home(request):
-    filiers = Filiere.objects.all()
-    modules = Module.objects.all()
+    departements = Departement.objects.all()
 
-    context = {'filieres': filiers, 'modules': modules}
+
+    context = {'departements': departements}
 
     return render(request, 'PartieAdmin/home.html', context)
+
 
 
 def register_request(request):
@@ -36,7 +37,7 @@ def register_request(request):
 
 def login_request(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
+        form = CustomLoginForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -49,7 +50,7 @@ def login_request(request):
                 messages.error(request, "Invalid username or password.")
         else:
             messages.error(request, "Invalid username or password.")
-    form = AuthenticationForm()
+    form = CustomLoginForm()
     return render(request, 'PartieAdmin/login.html', {"login_form": form})
 
 
