@@ -9,6 +9,8 @@ from django.http import HttpResponse
 from .models import Departement, Filiere, Module, Element, Enseignant, Etudiant, Absence
 
 class AbsenceAdmin(admin.ModelAdmin):
+
+    list_filter = ( 'element__module__filiere', 'element__module','element')
     def export_as_csv(self, request, queryset):
         meta = self.model._meta
         field_names = [field.name for field in meta.fields]
@@ -29,17 +31,47 @@ class AbsenceAdmin(admin.ModelAdmin):
     actions = ("export_as_csv",)
 
 
+class ModuleInline(admin.TabularInline):
+    model = Module
+    extra = 1
+
+class ElementInline(admin.TabularInline):
+    model = Element
+    extra = 1
+
+class FiliereInline(admin.TabularInline):
+    model = Filiere
+    extra = 1
+class ModuleAdmin(admin.ModelAdmin):
+    inlines = [ElementInline]
+    list_display = ('nom', 'filiere')
+
+
+
+class FiliereAdmin(admin.ModelAdmin):
+    inlines = [ModuleInline]
+    list_display = ('nom', 'departement')
+
+
+
+class DepartementAdmin(admin.ModelAdmin):
+    inlines = [FiliereInline]
+    extra = 1
+
+
+admin.site.site_header = "Partie Admin"
+
 admin.site.unregister(Group)
 admin.site.unregister(User)
 
-admin.site.register(Departement)
-admin.site.register(Filiere)
-admin.site.register(Module)
+admin.site.register(Departement, DepartementAdmin)
+admin.site.register(Filiere,FiliereAdmin)
+admin.site.register(Module,ModuleAdmin)
+admin.site.register(Absence,AbsenceAdmin)
+
 admin.site.register(Element)
 admin.site.register(Enseignant)
 admin.site.register(Etudiant)
 
 
-admin.site.site_header = "Partie Admin"
 
-admin.site.register(Absence,AbsenceAdmin)
