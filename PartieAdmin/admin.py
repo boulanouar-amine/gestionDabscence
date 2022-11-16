@@ -28,6 +28,7 @@ class AbsenceAdmin(admin.ModelAdmin):
 
 
     export_as_csv.short_description = "Export Selected"
+
     actions = ("export_as_csv",)
 
 

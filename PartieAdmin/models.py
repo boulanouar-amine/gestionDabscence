@@ -3,7 +3,7 @@ import csv
 from django.db import models
 from django.http import HttpResponse
 
-
+from PartieAdmin.models import *
 # Create your models here.
 
 class Departement(models.Model):
